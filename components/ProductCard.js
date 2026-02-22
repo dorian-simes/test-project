@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import styles from './ProductCard.module.css';
 
 export default function ProductCard({ product }) {
@@ -29,14 +28,12 @@ export default function ProductCard({ product }) {
             rel="noopener noreferrer"
             className={styles.imageLink}
           >
-            <Image
+            <img
               src={image_url}
               alt={title || 'Product'}
-              width={280}
-              height={280}
               onError={handleImageError}
               className={styles.image}
-              unoptimized
+              loading="lazy"
             />
           </a>
         ) : (
