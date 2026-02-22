@@ -15,6 +15,7 @@ export default function ProductCard({ product }) {
   } = product;
 
   const handleImageError = (e) => {
+    e.target.closest(`.${styles.imageContainer}`).classList.add(styles.imageFailed);
     e.target.style.display = 'none';
   };
 
@@ -27,10 +28,11 @@ export default function ProductCard({ product }) {
             target="_blank"
             rel="noopener noreferrer"
             className={styles.imageLink}
+            tabIndex={-1}
           >
             <img
               src={image_url}
-              alt={title || 'Product'}
+              alt={title || 'Watch product'}
               onError={handleImageError}
               className={styles.image}
               loading="lazy"
@@ -41,32 +43,46 @@ export default function ProductCard({ product }) {
             <span className={styles.placeholderIcon}>⌚</span>
           </div>
         )}
+
+        {/* Competitor badge - top left */}
+        {website && (
+          <span className={styles.competitorBadge}>{website}</span>
+        )}
+
+        {/* Category badge - top right */}
+        {category && (
+          <span className={styles.categoryBadge}>{category}</span>
+        )}
       </div>
 
       <div className={styles.content}>
-        <div className={styles.header}>
-          <h3 className={styles.title}>{title || 'Untitled Product'}</h3>
-          {category && <span className={styles.category}>{category}</span>}
-        </div>
+        <h3 className={styles.title}>{title || 'Untitled Product'}</h3>
 
         {description && <p className={styles.description}>{description}</p>}
 
-        <div className={styles.details}>
-          {price && <p className={styles.price}>{price}</p>}
-          <p className={styles.website}>From: {website}</p>
-          {date_added && <p className={styles.dateAdded}>Added: {date_added}</p>}
-        </div>
-
-        {product_url && (
-          <a
-            href={product_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.viewLink}
-          >
-            View on Site →
-          </a>
+        {price && (
+          <p className={styles.price}>{price}</p>
         )}
+
+        <div className={styles.meta}>
+          <span className={styles.metaItem}>{website}</span>
+          {date_added && (
+            <>
+              <span className={styles.metaDivider}>·</span>
+              <span className={styles.metaItem}>{date_added}</span>
+            </>
+          )}
+          {product_url && (
+            <a
+              href={product_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.viewLink}
+            >
+              View →
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );
